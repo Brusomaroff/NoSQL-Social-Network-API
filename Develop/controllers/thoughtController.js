@@ -13,16 +13,7 @@ module.exports = {
     Thought.findOne({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: "No thought with that ID" })
-          : res.json(thought)
-      )
-      .catch((err) => res.status(500).json(err));
-  },
-  deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId })
-      .then((thought) =>
-        !thought
-          ? res.status(404).json({ message: "No thought with that ID" })
+          ? res.status(404).json({ message: "No thought with ID" })
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
@@ -31,12 +22,21 @@ module.exports = {
     Thought.findOneAndUpdate({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: "No thought with that ID" })
+          ? res.status(404).json({ message: "No thought with ID" })
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
-  // create a new thought
+  deleteThought(req, res) {
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with ID" })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  // create new
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
