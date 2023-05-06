@@ -39,14 +39,15 @@ module.exports = {
   },
   // update 
   updateUser(req, res) {
-    User.findOneAndUpdate({ _id: req.params.userId })
+    User.findOneAndUpdate({ _id: req.params.userId }, req.body, { new: true })
       .then((user) =>
         !user
-          ? res.status(404).json({ message: "No thought with ID" })
+          ? res.status(404).json({ message: "No user with ID" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
+  
   // add friend
   addFriend(req, res) {
     return User.findOneAndUpdate(
