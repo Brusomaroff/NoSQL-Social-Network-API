@@ -1,6 +1,6 @@
-const {mongoose, Schema}= require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-// Create User model with Schema
 const userSchema = new Schema(
   {
     username: {
@@ -25,15 +25,32 @@ const userSchema = new Schema(
         ref: "user",
       },
     ],
+    reactions: [
+      {
+        reactionBody: {
+          type: String,
+          required: true,
+          maxLength: 280,
+        },
+        username: {
+          type: String,
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+          get: (timestamp) => dateFormat(timestamp),
+        },
+      },
+    ],
   },
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
     id: false,
   }
 );
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);
